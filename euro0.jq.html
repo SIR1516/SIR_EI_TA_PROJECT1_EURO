@@ -2,9 +2,19 @@
 	<head>
 		<title> Chave do Euromilhões </title>
 		<meta charset="utf-8">
-		
+		<script src="jquery/jquery-2.1.4.js"></script>
 		<script>
 		
+			$(document).ready( function () {
+				$("#b_gera").click(gera);
+				$("#b_limpa").click( function () {
+					textohtml =  $("#chaves").html();
+					console.log(textohtml);
+					$("#chaves").html("");
+				})
+			});
+		
+		/*
 			function start() {
 				document.getElementById("b_gera").onclick = gera;
 				document.getElementById("b_limpa").onclick = function () {
@@ -12,13 +22,9 @@
 				}
 				
 			}
+			*/
 				
 			function gera() {
-				//alert("olá");
-				//elemento = document.getElementById("chaves");
-				//elemento.hidden = true;
-				//console.log(elemento);
-				
 				/* 
 				 * sacos dos numeros e estrelas
 				 */
@@ -74,36 +80,30 @@
 				 
 				 // criar o div da class chave
 				 
-				 var divchave = document.createElement("div");
-				 divchave.setAttribute("class","chave");
+				 // var divchave = document.createElement("div");
+				 var divchave = $("<div class='chave'/>");
 				 
-				 var listanumeros = document.createElement("ul");
-				 listanumeros.setAttribute("class","numeros");
+				 //divchave.setAttribute("class","chave");
+				 
+				 var listanumeros = $("<ul/>").addClass("numeros");
+				 
+				 //var listanumeros = document.createElement("ul");
+				 //listanumeros.setAttribute("class","numeros");
 				 
 				 for (var i=0; i < chave_numeros.length; i++) {
-				 	var li = document.createElement("li");
-				 	li.innerHTML = chave_numeros[i];
-				 	listanumeros.appendChild(li);
+				 	var li = $("<li/>").html(chave_numeros[i])
+				 	listanumeros.append(li);
 				 }
 				 
-				 var listaestrelas = document.createElement("ul");
-				 listaestrelas.setAttribute("class","estrelas");
+				 var listaestrelas = $("<ul/>").addClass("estrelas");
 				 
-				 for (var i=0; i < chave_estrelas.length; i++) {
-				 	var li = document.createElement("li");
-				 	li.innerHTML = chave_estrelas[i];
-				 	listaestrelas.appendChild(li);
+				 for (var i=0; i < chave_estrelas.length; i++) { 
+				 	listaestrelas.append($("<li/>").html(chave_estrelas[i]));
 				 }
 				 
-				 divchave.appendChild(listanumeros);
-				 divchave.appendChild(listaestrelas);
+				divchave.append(listanumeros).append(listaestrelas);
 				 
-				 var divchaves = document.getElementById("chaves");
-				 divchaves.appendChild(divchave);
-				 
-				 
-				 
-				
+				$("#chaves").append(divchave);
 				
 				
 			}
@@ -140,7 +140,9 @@
 			
 		</style>	
 	</head>
-	<body onload="start();">
+	<!--body onload="start();"-->
+	<body>
+		
 		<h1>sistemas de informação em rede</h1>
 		
 		<div id="cabeca">
