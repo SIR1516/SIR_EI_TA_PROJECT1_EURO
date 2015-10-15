@@ -97,9 +97,13 @@
 				 
 				 var listaestrelas = $("<ul/>").addClass("estrelas");
 				 
-				 for (var i=0; i < chave_estrelas.length; i++) { 
-				 	listaestrelas.append($("<li/>").html(chave_estrelas[i]));
-				 }
+				// for (var i=0; i < chave_estrelas.length; i++) { 
+				// 	listaestrelas.append($("<li/>").html(chave_estrelas[i]));
+				// }
+				 
+				 $.each(chave_estrelas,function (i,val) {
+				 	listaestrelas.append($("<li/>").html(val));
+				 })
 				 
 				divchave.append(listanumeros).append(listaestrelas);
 				 
