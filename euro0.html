@@ -1,0 +1,171 @@
+<html>
+	<head>
+		<title> Chave do Euromilhões </title>
+		<meta charset="utf-8">
+		<script>
+		
+			function start() {
+				document.getElementById("b_gera").onclick = gera;
+				document.getElementById("b_limpa").onclick = function () {
+					document.getElementById("chaves").innerHTML = "";
+				}
+				
+			}
+				
+			function gera() {
+				//alert("olá");
+				//elemento = document.getElementById("chaves");
+				//elemento.hidden = true;
+				//console.log(elemento);
+				
+				/* 
+				 * sacos dos numeros e estrelas
+				 */
+				var saco_numeros = Array();
+				var saco_estrelas = Array();
+				
+				var chave_numeros = Array();
+				var chave_estrelas = Array();
+				
+				const NN = 5;		// numero de numeros
+				const NE = 2;
+				const MAXN = 50;
+				const MINN = 1;
+				const MAXE = 11;
+				const MINE = 1;
+				
+				/*
+				 * Preencher os sacos
+				 */
+				
+				for(var i=0; i < (MAXN - MINN) + 1; i++) {
+					saco_numeros.push(MINN + i);
+				}
+				console.log("numero:",saco_numeros);
+				
+				for(var i=0; i < (MAXE - MINE) + 1; i++) {
+					saco_estrelas.push(MINE + i);
+				}
+				console.log("estrela:",saco_estrelas);
+				
+				/* 
+				 * Extrair
+				 */ 
+				 
+				 for (var i=0; i < NN; i++) {
+				 	var idx = Math.floor(Math.random() * saco_numeros.length);
+				 	//console.log("idx:",idx);
+				 	var nx = saco_numeros.splice(idx,1);
+				 	//console.log("nx  :  ",nx);
+				 	chave_numeros.push(nx[0]);
+				 }
+				 
+				  for (var i=0; i < NE; i++) {
+				 	var idx = Math.floor(Math.random() * saco_estrelas.length);
+				 	console.log("idx:",idx);
+				 	var ex = saco_estrelas.splice(idx,1);
+				 	console.log("nx  :  ",ex);
+				 	console.log("saco_estrelas  :  ",saco_estrelas);
+				 	chave_estrelas.push(ex[0]);
+				 	console.log("chave_estrelas  :  ",chave_estrelas);
+				 	
+				 }
+				 
+				 // criar o div da class chave
+				 
+				 var divchave = document.createElement("div");
+				 divchave.setAttribute("class","chave");
+				 
+				 var listanumeros = document.createElement("ul");
+				 listanumeros.setAttribute("class","numeros");
+				 
+				 for (var i=0; i < chave_numeros.length; i++) {
+				 	var li = document.createElement("li");
+				 	li.innerHTML = chave_numeros[i];
+				 	listanumeros.appendChild(li);
+				 }
+				 
+				 var listaestrelas = document.createElement("ul");
+				 listaestrelas.setAttribute("class","estrelas");
+				 
+				 for (var i=0; i < chave_estrelas.length; i++) {
+				 	var li = document.createElement("li");
+				 	li.innerHTML = chave_estrelas[i];
+				 	listaestrelas.appendChild(li);
+				 }
+				 
+				 divchave.appendChild(listanumeros);
+				 divchave.appendChild(listaestrelas);
+				 
+				 var divchaves = document.getElementById("chaves");
+				 divchaves.appendChild(divchave);
+				 
+				 
+				 
+				
+				
+				
+			}
+			
+		</script>
+		<style>
+			div {color:red}
+			#cabeca {background-color: yellow}
+			#chaves {background-color: lightblue}
+			
+			li,ul {display:inline-block}
+			
+			li {
+				width : 30px;
+				height : 30px;
+				font-size: 20px;
+				border-style: solid;
+				border-size: 1px;
+				border-color:black;
+				text-align: center;	
+				border-radius: 5px;	
+				margin: 10px;	
+			}
+			
+			ul.estrelas li {
+				background-color:yellow;
+			}
+			
+			ul.numeros li {
+				background-color:lime;
+			}
+			
+
+			
+		</style>	
+	</head>
+	<body onload="start();">
+		<h1>sistemas de informação em rede</h1>
+		
+		<div id="cabeca">
+			A           minha
+			chave
+			do 
+			euromilhões
+		</div>
+		<div id="control">
+			<button id="b_gera">Gera Chave</button>
+			<button id="b_limpa">Limpa Chaves</button>
+		</div>
+		<div id="chaves">
+			<div class="chave">
+				<ul class="numeros">
+					<li>9</li>
+					<li>11</li>
+					<li>23</li>
+					<li>45</li>
+					<li>50</li>
+				</ul>
+				<ul class="estrelas">
+					<li>3</li>
+					<li>4</li>
+				</ul>
+			</div>
+		</div>
+	</body>
+</html>
