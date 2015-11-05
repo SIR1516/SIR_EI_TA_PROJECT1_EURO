@@ -42,11 +42,27 @@ class Gerador {
 		return json_encode($this->chave);
 	}
 	
+	// return a XML document (string)
+	public function toXML() {
+		$xmldoc = new SimpleXMLElement("<chave></chave>");
+			$xn = $xmldoc->addChild("numeros");
+			foreach ($this->chave->numeros as $numero) {
+				$xn->addChild("num",$numero);
+			}
+			
+			$xe = $xmldoc->addChild("estrelas");
+			foreach ($this->chave->estrelas as $estrela) {
+				$xe->addChild("num",$estrela);
+			}
+			
+		return $xmldoc->asXML();
+	}
+	
 }
 
 $gera = new Gerador();
-
-echo ($gera->toJSON());
+header("Content-type: text/xml");
+echo ($gera->toXML());
 
 //echo '{"numeros":[1,2,3,4,5],"estrelas":[1,2]}';
 

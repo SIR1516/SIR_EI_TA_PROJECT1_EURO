@@ -6,7 +6,8 @@
 		<script>
 		
 			$(document).ready( function () {
-				$("#b_gera").click(gera);
+				$("#b_geraJSON").click(geraJSON);
+				$("#b_geraXML").click(geraXML);
 				$("#b_limpa").click( function () {
 					textohtml =  $("#chaves").html();
 					console.log(textohtml);
@@ -24,19 +25,19 @@
 			}
 			*/
 				
-			function gera() {
-				$.ajax("http://www.estg.ipvc.pt/~pmoreira/sir/euro/serveChave.php", {
+			function geraJSON() {
+				$.ajax("gerador.php", {
 					method : "GET",
 					dataType: "json",
 					success : function (data) {
 						//alert(data.numeros);
 						
 						ln = $("<ul/ class='numeros'>");
-						$.each(data.numbers,function (idx,val) {
+						$.each(data.numeros,function (idx,val) {
 							ln.append($("<li/>").html(val));
 						});
 						le = $("<ul/>").addClass("estrelas");
-						$.each(data.stars,function (idx,val) {
+						$.each(data.estrelas,function (idx,val) {
 							le.append($("<li/>").html(val));
 						});
 						chave = $("<div/>").addClass("chave").append(ln).append(le);
@@ -46,6 +47,36 @@
 				});	
 			}
 			
+			function geraXML() {
+				$.ajax("geradorXML.php", {
+					method : "GET",
+					dataType: "xml",
+					success : function (docXML) {
+						//alert(data);
+						ln = $("<ul/ class='numeros'>");
+						
+						//nos num dos numeros
+						$nnn = $(docXML).find("numeros>num");
+						$.each($nnn, function (idx, obj_da_colecao) {
+							ln.append($("<li/>").html(obj_da_colecao.textContent));
+						});
+						
+						/*
+						$.each($(data).find("numeros num"), function (idx,val) {
+							ln.append($("<li/>").html($(val).text()));
+							});
+						*/
+						le = $("<ul/ class='estrelas'>");
+						$.each($(docXML).find("estrelas num"), function (idx,val) {
+							le.append($("<li/>").html($(val).text()));
+							});
+						
+						chave = $("<div/>").addClass("chave").append(ln).append(le);
+						$("#chaves").append(chave);
+						
+					}
+				});	
+			}
 		</script>
 		<style>
 			div {color:red}
@@ -90,7 +121,9 @@
 			euromilhões
 		</div>
 		<div id="control">
-			<button id="b_gera">Gera Chave</button>
+			<button id="b_geraJSON">Gera Chave JSON</button>
+			<button id="b_geraXML">Gera Chave XML</button>
+			
 			<button id="b_limpa">Limpa Chaves</button>
 		</div>
 		<div id="chaves">
